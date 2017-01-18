@@ -4,9 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    </script>
     <title>Document</title>
+    <style media="screen">
+        select {
+            width: 60px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <span>请选择背单词的最小时间</span>
+                    </td>
+                    <td>
+                        <select id='id-select-minitime' class="setup" name="">
+                            <option selected value="5">5min</option>
+                            <option value="6">6min</option>
+                            <option value="7">7min</option>
+                            <option value="8">8min</option>
+                            <option value="9">9min</option>
+                            <option value="10">10min</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>请选择复习时间</span>
+                    </td>
+                    <td>
+                        <select id='id-select-minirecite' class="setup" name="">
+                            <option selected value="1">1min</option>
+                            <option value="2">2min</option>
+                            <option value="3">3min</option>
+                            <option value="4">4min</option>
+                            <option value="5">5min</option>
+                            <option value="6">6min</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>请选择循环数，如5个小循环</span>
+                    </td>
+                    <td>
+                        <select id='id-select-times' class="setup" name="">
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option selected value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="display">
+            <span id='id-span-tip'>单词背诵中</span>
+            <span id='id-span-time'>--:--</span>
+        </div>
+    </div>
+    <audio autoplay></audio>
+    <script type="text/javascript">
+        // wordsClock.js
+        // 定义自己的log
+        const log =function() {
+            console.log.apply(console, arguments)
+        }
 
+        // 获取时间参数
+        var getOptions = function() {
+            var options = {}
+            // var miniTime = document.querySelector('#id-select-minitime').value
+            options.miniTime = Number(document.querySelector('#id-select-minitime').value)
+            options.miniRecite = Number(document.querySelector('#id-select-minirecite').value)
+            options.times = Number(document.querySelector('#id-select-times').value)
+            // options.recite = Number(document.querySelector('#id-select-recite').value)
+            return options
+        }
+
+        // 转换为毫秒数
+        var transfer2micro = function(minutes) {
+            var microSec = minutes * 60 * 1000
+            return microSec
+        }
+        // 时间到了自动提醒
+        const itsTime = function() {
+            var audio = document.querySelector('audio')
+            audio.setAttribute('src', 'alarm-clock.wav')
+        }
+        var options = getOptions()
+        var delayTime = transfer2micro(options.miniTime) + transfer2micro(options.miniRecite)
+        var delayTimeClear = delayTime * (options.times)
+        var flag = 0
+        var inter = setInterval(function() {
+            itsTime(0)
+            log(flag)
+            flag += 1
+        }, delayTime)
+        setTimeout(function(){
+            clearInterval(inter)
+        }, delayTimeClear)
+    </script>
 </body>
 </html>
