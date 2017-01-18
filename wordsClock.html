@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    </script>
     <title>Document</title>
+    <script type="text/javascript" src='wordsClock.js'>
+        window.onload = function() {
+            __main()
+        }
+    </script>
     <style media="screen">
         select {
             width: 60px;
@@ -68,46 +72,6 @@
         </div>
     </div>
     <audio autoplay></audio>
-    <script type="text/javascript">
-        // wordsClock.js
-        // 定义自己的log
-        const log =function() {
-            console.log.apply(console, arguments)
-        }
-
-        // 获取时间参数
-        var getOptions = function() {
-            var options = {}
-            // var miniTime = document.querySelector('#id-select-minitime').value
-            options.miniTime = Number(document.querySelector('#id-select-minitime').value)
-            options.miniRecite = Number(document.querySelector('#id-select-minirecite').value)
-            options.times = Number(document.querySelector('#id-select-times').value)
-            // options.recite = Number(document.querySelector('#id-select-recite').value)
-            return options
-        }
-
-        // 转换为毫秒数
-        var transfer2micro = function(minutes) {
-            var microSec = minutes * 60 * 1000
-            return microSec
-        }
-        // 时间到了自动提醒
-        const itsTime = function() {
-            var audio = document.querySelector('audio')
-            audio.setAttribute('src', 'alarm-clock.wav')
-        }
-        var options = getOptions()
-        var delayTime = transfer2micro(options.miniTime) + transfer2micro(options.miniRecite)
-        var delayTimeClear = delayTime * (options.times)
-        var flag = 0
-        var inter = setInterval(function() {
-            itsTime(0)
-            log(flag)
-            flag += 1
-        }, delayTime)
-        setTimeout(function(){
-            clearInterval(inter)
-        }, delayTimeClear)
-    </script>
+    <button id='id-button-start' type="button" name="button">开始</button>
 </body>
 </html>
