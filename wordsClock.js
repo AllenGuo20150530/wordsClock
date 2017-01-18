@@ -1,4 +1,5 @@
 // wordsClock.js
+"use strict"
 // 定义自己的log
 const log =function() {
     console.log.apply(console, arguments)
@@ -36,6 +37,7 @@ const getMemoryTime = function(options) {
     for (let i = 0; i + 1 < len; i++) {
         arr[i + 1] = arr[i] + 6
     }
+    log('memory time array--->', arr)
     return  arr
 }
 // 获得数组，内有提示复习的时间
@@ -46,22 +48,39 @@ const getReciteTime = function(options) {
     for (let i = 0; i + 1 < len; i++) {
         arr[i + 1] = arr[i] + 6
     }
+    log('recite time array--->', arr)
     return  arr
 }
 // 依据所传入的数组参数，分别设置提醒时间
 const setTime = function(array) {
+    log('set time ---->', array)
     for (let i = 0; i < array.length; i++) {
         var delay = transfer2micro(array[i])
-        setTimeout(function() {
+        log('delay ---->', delay)
+        setTimeout(function(){
             itsTime()
         }, delay)
     }
 }
+
+// 在开始按钮上绑定事件
+const bindEventStart = function() {
+    var startBtn = document.querySelector('#id-button-start')
+    startBtn.addEventListener('click', function(){
+        log('你点击了开始按钮，开始背单词吧！')
+        var options = getOptions()
+        var reciteTime = getReciteTime(options)
+        var memoryTime = getMemoryTime(options)
+        setTime(memoryTime)
+        setTime(reciteTime)
+    })
+}
+
 // 主函数入口
 const __main = function() {
-    var options = getOptions()
-    var reciteTime = getReciteTime(options)
-    var memoryTime = getMemoryTime(options)
-    setTime(memoryTime)
-    setTime(reciteTime)
+    bindEventStart()
+}
+
+window.onload = function(){
+    __main()
 }
